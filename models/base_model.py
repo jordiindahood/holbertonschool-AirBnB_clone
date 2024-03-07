@@ -5,9 +5,11 @@ BaseModel module
 This module defines the BaseModel class,
 which serves as the base class for other classes.
 """
+
+from models import storage
 from uuid import uuid4
 from datetime import datetime
-
+ 
 
 class BaseModel:
     """
@@ -34,6 +36,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
+            storage.new(self)
 
     def save(self):
         """
@@ -41,7 +44,7 @@ class BaseModel:
         current datetime and saves the instance.
         """
         self.updated_at = datetime.utcnow()
-
+        storage.save()
     def to_dict(self):
         """
         Converts the BaseModel instance to a dictionary.
