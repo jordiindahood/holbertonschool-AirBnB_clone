@@ -8,6 +8,7 @@ from models.review import Review
 from models.city import City
 from models.user import User
 from models.state import State
+from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
@@ -39,10 +40,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         
     def do_show(self, line):
-        """Usage: show [<classname>.<instance-id> | <classname> ]
-        displays information about an individual object\
-or all objects of a particular class.
-        """
+    
         commands = line.split()
         if not line:
             print("** class name missing **")
@@ -57,6 +55,23 @@ or all objects of a particular class.
                 print(obj[key])
             else:
                 print("** no instance found **")
+    def do_destroy(self, line):
+        """Destroy an object by its ID."""
+        sp = line.split()
+        if not line:
+            print("** class name missing **")
+        elif sp[0] not in globals():
+            print("** class doesn't exist **")
+        elif len(sp) < 2:
+            print("** instance id missing **")
+        else:
+            key = f"{sp[0]}.{sp[1]}"
+            obj = storage.all()
+            if key in obj:
+                del obj[key]
+                storage.save()
+            else:
+                print("** no instance found **")            
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
