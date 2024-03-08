@@ -9,7 +9,7 @@ which serves as the base class for other classes.
 from models import storage
 from uuid import uuid4
 from datetime import datetime
- 
+
 
 class BaseModel:
     """
@@ -45,6 +45,7 @@ class BaseModel:
         """
         self.updated_at = datetime.utcnow()
         storage.save()
+
     def to_dict(self):
         """
         Converts the BaseModel instance to a dictionary.

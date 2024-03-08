@@ -9,6 +9,7 @@ serialization and deserialization of objects to and from JSON files.
 import json
 from os.path import isfile
 
+
 class FileStorage:
     """
     FileStorage class manages serialization and
