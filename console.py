@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" a consol that contains the entry point of the command interpreter"""
+""" a console that contains the entry point of the command interpreter"""
 import cmd
 
 
