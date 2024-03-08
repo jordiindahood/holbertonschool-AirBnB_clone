@@ -52,20 +52,21 @@ class HBNBCommand(cmd.Cmd):
             key = f"{commands[0]}.{commands[1]}"
             obj = storage.all()
             if key in obj:
-                print(f"[\"{obj[key]}\"]")
+                print(f'["{obj[key]}"]')
             else:
                 print("** no instance found **")
+
     def do_destroy(self, line):
         """Destroy an object by its ID."""
-        sp = line.split()
+        command = line.split()
         if not line:
             print("** class name missing **")
-        elif sp[0] not in globals():
+        elif command[0] not in globals():
             print("** class doesn't exist **")
-        elif len(sp) < 2:
+        elif len(command) < 2:
             print("** instance id missing **")
         else:
-            key = f"{sp[0]}.{sp[1]}"
+            key = f"{command[0]}.{command[1]}"
             obj = storage.all()
             if key in obj:
                 del obj[key]
@@ -88,22 +89,22 @@ class HBNBCommand(cmd.Cmd):
         """
         update
         """
-        sp = line.split()
+        command = line.split()
         if not line:
             print("** class name missing **")
-        elif sp[0] not in globals():
+        elif command[0] not in globals():
             print("** class doesn't exist **")
-        elif len(sp) < 2:
+        elif len(command) < 2:
             print("** instance id missing **")
-        elif len(sp) < 3:
+        elif len(command) < 3:
             print("** attribute name missing **")
-        elif len(sp) < 4:
+        elif len(command) < 4:
             print("** value missing **")
         else:
-            key = f"{sp[0]}.{sp[1]}"
+            key = f"{command[0]}.{command[1]}"
             obj = storage.all()
             if key in obj:
-                obj[key].__dict__[sp[2]] = sp[3]
+                obj[key].__dict__[command[2]] = command[3]
                 storage.save()
             else:
                 print("** no instance found **")
