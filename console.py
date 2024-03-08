@@ -10,6 +10,7 @@ from models.user import User
 from models.state import State
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     """Hearthstone Botnet Command Interface."""
@@ -38,9 +39,8 @@ class HBNBCommand(cmd.Cmd):
             print(cls.id)
         else:
             print("** class doesn't exist **")
-        
+
     def do_show(self, line):
-    
         commands = line.split()
         if not line:
             print("** class name missing **")
@@ -52,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             key = f"{commands[0]}.{commands[1]}"
             obj = storage.all()
             if key in obj:
-                print(obj[key])
+                print(f"[\"{obj[key]}\"]")
             else:
                 print("** no instance found **")
     def do_destroy(self, line):
@@ -71,7 +71,42 @@ class HBNBCommand(cmd.Cmd):
                 del obj[key]
                 storage.save()
             else:
-                print("** no instance found **")            
+                print("** no instance found **")
+
+    def do_all(self, line):
+        """
+        List all instances of a given class.
+        """
+        class_name = line.split(".")[0]
+        if class_name not in globals().keys() and len(line) != 0:
+            print("** class doesn't exist **")
+        else:
+            obj = storage.all()
+            print(list(str(obj[key]) for key in obj if class_name in key))
+
+    def do_update(self, line):
+        """
+        update
+        """
+        sp = line.split()
+        if not line:
+            print("** class name missing **")
+        elif sp[0] not in globals():
+            print("** class doesn't exist **")
+        elif len(sp) < 2:
+            print("** instance id missing **")
+        elif len(sp) < 3:
+            print("** attribute name missing **")
+        elif len(sp) < 4:
+            print("** value missing **")
+        else:
+            key = f"{sp[0]}.{sp[1]}"
+            obj = storage.all()
+            if key in obj:
+                obj[key].__dict__[sp[2]] = sp[3]
+                storage.save()
+            else:
+                print("** no instance found **")
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
