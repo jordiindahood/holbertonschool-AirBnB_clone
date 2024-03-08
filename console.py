@@ -27,9 +27,12 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
-        """Usage: create <classname>
-        Starts a new instance of commandsecified class and saves it with a unique id.
-                        Prints the newly created object's id"""
+        """
+        Usage: create <classname>
+        Starts a new instance of commandsecified class
+        and saves it with a unique id.
+        Prints the newly created object's id
+        """
         if not line:
             print("** class name missing **")
             return
